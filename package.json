@@ -8,7 +8,7 @@
     "eslint": "eslint ./src/**/*",
     "lint": "npm run eslint && npm run prettier",
     "prettier": "prettier \"./**/*.{js,md,yml,yaml,json}\" --check",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "watch": "nodemon"
   },
   "repository": {
