@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "eslint": "eslint ./src/**/*",
+    "eslint": "eslint ./src/**",
     "lint": "npm run eslint && npm run prettier",
     "prettier": "prettier \"./**/*.{js,md,yml,yaml,json}\" --check",
     "test": "jest --passWithNoTests",

@@ -22,7 +22,6 @@ export async function getHero(heroId: string): Promise<Hero> {
     }
     return res.data;
   } catch (e) {
-    console.error(e);
     checkNotFound(e, heroId);
     throw e;
   }
