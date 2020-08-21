@@ -8,6 +8,7 @@
     "eslint": "eslint ./src/**",
     "lint": "npm run eslint && npm run prettier",
     "prettier": "prettier \"./**/*.{js,md,yml,yaml,json}\" --check",
+    "start": "node build/index.js",
     "test": "jest",
     "test:e2e": "jest -c jest.config.e2e.js",
     "watch": "nodemon"
