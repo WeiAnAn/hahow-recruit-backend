@@ -14,10 +14,13 @@ describe('hahowAuth', () => {
       status: 200,
     }));
     expect(await auth('hahow', 'rock')).toBe(true);
-    expect(mockPost).toBeCalledWith('/auth', {
-      data: { name: 'hahow', password: 'rock' },
-      validateStatus: expect.any(Function),
-    });
+    expect(mockPost).toBeCalledWith(
+      '/auth',
+      { name: 'hahow', password: 'rock' },
+      {
+        validateStatus: expect.any(Function),
+      }
+    );
   });
 
   test('should return false if api response 401', async () => {
@@ -29,10 +32,14 @@ describe('hahowAuth', () => {
       };
     });
     expect(await auth('hahow', 'rockkkkkkk')).toBe(false);
-    expect(mockPost).toBeCalledWith('/auth', {
-      data: { name: 'hahow', password: 'rockkkkkkk' },
-      validateStatus: expect.any(Function),
-    });
+    expect(mockPost).toBeCalledWith(
+      '/auth',
+      {
+        name: 'hahow',
+        password: 'rockkkkkkk',
+      },
+      { validateStatus: expect.any(Function) }
+    );
   });
 
   test('should throw error when unknown error occur', async () => {
@@ -46,9 +53,15 @@ describe('hahowAuth', () => {
     } catch (e) {
       expect(e).toEqual(new Error());
     }
-    expect(mockPost).toBeCalledWith('/auth', {
-      data: { name: 'hahow', password: 'abcde' },
-      validateStatus: expect.any(Function),
-    });
+    expect(mockPost).toBeCalledWith(
+      '/auth',
+      {
+        name: 'hahow',
+        password: 'abcde',
+      },
+      {
+        validateStatus: expect.any(Function),
+      }
+    );
   });
 });
