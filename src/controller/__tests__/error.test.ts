@@ -3,6 +3,10 @@ import {
   HahowHeroDataError,
   HahowHeroNotFoundError,
 } from '../../services/hahowHero';
+import {
+  AuthValidationError,
+  AuthenticationError,
+} from '../../middlewares/auth';
 import { Response } from 'express';
 
 describe('errorHandler', () => {
@@ -33,5 +37,19 @@ describe('errorHandler', () => {
     errorHandler(error, req, res, next);
     expect(res.status).toBeCalledWith(500);
     expect(res.json).toBeCalledWith({ message: 'internal server error' });
+  });
+
+  test('should call response 400 when AuthValidationError', () => {
+    const error = new AuthValidationError();
+    errorHandler(error, req, res, next);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.json).toBeCalledWith({ message: 'auth validation error' });
+  });
+
+  test('should call response 401 when AuthenticationError', () => {
+    const error = new AuthenticationError();
+    errorHandler(error, req, res, next);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.json).toBeCalledWith({ message: 'authentication error' });
   });
 });

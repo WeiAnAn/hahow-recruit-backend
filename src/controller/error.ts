@@ -1,8 +1,9 @@
+import { Request, Response, NextFunction } from 'express';
 import {
   HahowHeroDataError,
   HahowHeroNotFoundError,
 } from '../services/hahowHero';
-import { Request, Response, NextFunction } from 'express';
+import { AuthValidationError, AuthenticationError } from '../middlewares/auth';
 
 export default function errorHandler(
   err: Error,
@@ -15,6 +16,12 @@ export default function errorHandler(
   }
   if (err instanceof HahowHeroNotFoundError) {
     return res.status(404).json({ message: err.message });
+  }
+  if (err instanceof AuthValidationError) {
+    return res.status(400).json({ message: err.message });
+  }
+  if (err instanceof AuthenticationError) {
+    return res.status(401).json({ message: err.message });
   }
   return res.status(500).json({ message: 'internal server error' });
 }

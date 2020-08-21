@@ -26,7 +26,7 @@ export class AuthenticationError extends Error {
   constructor() {
     super();
     this.name = 'AuthenticationError';
-    this.message = 'authentication error ';
+    this.message = 'authentication error';
   }
 }
 
