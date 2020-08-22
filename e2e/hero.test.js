@@ -2,7 +2,7 @@ const axios = require('axios');
 const { default: app } = require('../build/app');
 
 //increase test timeout, because some api may take long time to response or retry
-jest.setTimeout(10000);
+jest.setTimeout(20000);
 
 const request = axios.create({
   baseURL: 'http://localhost:3000',
@@ -13,6 +13,8 @@ const authenticatedHeaders = {
   name: 'hahow',
   password: 'rocks',
 };
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Only care about the response data structure instead of value.
@@ -87,7 +89,10 @@ describe('hero api', () => {
     async function retry(req) {
       let times = 0,
         res;
-      while (times < 3 && (!res || res.status !== 200)) {
+      while (times < 5 && (!res || res.status !== 200)) {
+        if (times !== 0) {
+          await delay(500);
+        }
         res = await req();
         if (res.status !== 200) {
           expect(res.status).toBe(500);
