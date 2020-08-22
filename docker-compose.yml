@@ -1,0 +1,12 @@
+version: '2.0'
+services:
+  api:
+    build: .
+    ports:
+      - '3000:3000'
+    links:
+      - redis
+    volumes:
+      - ./.env:/app/.env
+  redis:
+    image: redis

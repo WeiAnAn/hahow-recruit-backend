@@ -2,9 +2,35 @@
 
 https://hahow-recruit-backend.herokuapp.com/
 
+## Table of Contents
+
+- [Getting Started](#getting-started)
+  - [Install](#install)
+  - [Build](#build)
+  - [Start API Server](#start-api-server)
+- [Getting Started With Docker](#getting-started-with-docker)
+  - [Preparation](#preparation)
+  - [Start API Server](#start-api-server)
+- [Another Scripts](#another-scripts)
+  - [End-to-end test](#end-to-end-test)
+  - [Eslint](#eslint)
+  - [Lint](#lint)
+  - [Prettier](#prettier)
+  - [Unit test](#unit-test)
+  - [Watch](#watch)
+- [Architecture](#architecture)
+  - [Directory Architecture](#directory-architecture)
+  - [Server Architecture](#server-architecture)
+- [Third Party Dependencies](#third-party-dependencies)
+  - [Dependencies](#dependencies)
+  - [Dev dependencies](#devdependencies)
+- [註解原則](#註解原則)
+- [遇到的困難](#遇到的困難)
+- [API](#API)
+
 ## Getting Started
 
-### Installing
+### Install
 
 ```
 npm install
@@ -60,6 +86,35 @@ npm run test:e2e
 
 ```
 npm run watch
+```
+
+## Getting Started With Docker
+
+### Preparation
+
+- docker
+- docker-compose
+
+### Start API Server
+
+```
+docker-compose up
+```
+
+## Configuration
+
+```sh
+cp .env.example .env
+```
+
+In `.env`
+
+```sh
+CACHE_DRIVER=redis # Cache 機制, 預設使用 memory 可改指定 redis
+
+# 以下設定為使用 redis 作為 cache 的選項
+REDIS_HOST=redis
+REDIS_PORT=
 ```
 
 ## Architecture
