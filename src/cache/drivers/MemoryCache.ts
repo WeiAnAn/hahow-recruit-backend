@@ -18,7 +18,7 @@ class MemoryCache implements Cache {
     }
     return Promise.resolve(data.getData());
   }
-  set(key: string, value: unknown, time: number): Promise<boolean> {
+  set(key: string, value: unknown, time: number): Promise<void> {
     const cacheData = new CacheData(value, time);
     const oldCacheData = this.data.get(key);
     if (oldCacheData) {
@@ -26,7 +26,7 @@ class MemoryCache implements Cache {
     } else {
       this.data.set(key, cacheData);
     }
-    return Promise.resolve(true);
+    return Promise.resolve();
   }
 }
 

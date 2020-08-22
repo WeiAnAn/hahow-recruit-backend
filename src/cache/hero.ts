@@ -27,17 +27,17 @@ export function getHeroProfileById(id: string): Promise<HeroProfile | null> {
   return cache.get(getHeroProfileKey(id)) as Promise<HeroProfile>;
 }
 
-export function setHeroById(id: string, hero: Hero): Promise<boolean> {
+export function setHeroById(id: string, hero: Hero): Promise<void> {
   return cache.set(getHeroKey(id), hero, TWO_HOUR_SECOND);
 }
 
-export function setHeroes(heroes: Hero[]): Promise<boolean> {
+export function setHeroes(heroes: Hero[]): Promise<void> {
   return cache.set(getHeroesKey(), heroes, TWO_HOUR_SECOND);
 }
 
 export function setHeroProfileById(
   id: string,
   profile: HeroProfile
-): Promise<boolean> {
+): Promise<void> {
   return cache.set(getHeroProfileKey(id), profile, TWO_HOUR_SECOND);
 }
