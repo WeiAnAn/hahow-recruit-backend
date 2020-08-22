@@ -77,6 +77,8 @@ npm run watch
 ├── package-lock.json
 ├── package.json
 ├── src
+|   ├── cache # 快取邏輯
+│   │   └── drivers # 不同的 cache 存取方式, 有 Memory, Redis
 │   ├── controller # 控制並處理 request
 │   ├── middlewares # 存放各種 middleware
 │   ├── models # Data 模型
