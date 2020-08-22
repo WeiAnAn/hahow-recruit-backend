@@ -25,7 +25,8 @@
   "homepage": "https://github.com/WeiAnAn/hahow-recruit-backend#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
