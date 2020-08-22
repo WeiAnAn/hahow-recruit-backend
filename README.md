@@ -30,6 +30,11 @@ https://hahow-recruit-backend.herokuapp.com/
 
 ## Getting Started
 
+### Requirement
+
+- Node.js v10 up
+- (optional) redis
+
 ### Install
 
 ```
@@ -90,7 +95,7 @@ npm run watch
 
 ## Getting Started With Docker
 
-### Preparation
+### Requirement
 
 - docker
 - docker-compose
@@ -150,13 +155,25 @@ TODO
 
 ### Dependencies
 
+- axios
+
+  Promise base 的 HTTP client
+
+- dotenv
+
+  載入 .env 檔案, 並轉換成環境變數
+
 - express
 
   Node.js 的 HTTP server framework, 核心概念是 middleware 的堆疊
 
-- axios
+- redis
 
-  Promise base 的 HTTP client
+  redis client
+
+- winston
+
+  可擴充的 logger, 可以透過各種 transport 傳送 log, 如 console, file 等等
 
 ### Devdependencies
 
