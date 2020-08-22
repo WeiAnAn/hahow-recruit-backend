@@ -1,5 +1,5 @@
 import express from 'express';
-import Router from './rotuers';
+import Router from './routers';
 import errorHandler from './controller/error';
 
 const app = express();
