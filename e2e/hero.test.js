@@ -70,12 +70,14 @@ describe('hero api', () => {
         headers: { name: 'test' },
       });
       expect(res.status).toBe(400);
+      expect(res.data).toEqual({ message: 'auth validation error' });
     });
     test('should response 401 when auth failed', async () => {
       const res = await request.get('/heroes', {
         headers: { name: 'hahow', password: 'rockssss' },
       });
       expect(res.status).toBe(401);
+      expect(res.data).toEqual({ message: 'authentication error' });
     });
   });
 
@@ -113,16 +115,21 @@ describe('hero api', () => {
         headers: { name: 'hahow' },
       });
       expect(res.status).toBe(400);
+      expect(res.data).toEqual({ message: 'auth validation error' });
     });
     test('should response 401 when auth failed', async () => {
       const res = await request.get('/heroes/1', {
         headers: { name: 'hahow', password: 'rockssss' },
       });
       expect(res.status).toBe(401);
+      expect(res.data).toEqual({ message: 'authentication error' });
     });
     test('should response 404 when hero not found', async () => {
       const res = await request.get('/heroes/99999');
       expect(res.status).toBe(404);
+      expect(res.data).toEqual({
+        message: 'hero(id = 99999) not found',
+      });
     });
   });
 });
