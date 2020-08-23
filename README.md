@@ -149,7 +149,7 @@ REDIS_PORT=
 
 ### Server Architecture
 
-TODO
+![Architecture](./Architecture.png)
 
 ## Third Party Dependencies
 
