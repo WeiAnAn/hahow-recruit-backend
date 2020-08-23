@@ -1,14 +1,6 @@
-jest.mock('../../services/hahowHero.ts');
+jest.mock('../../models/Hero.ts');
 import { getHeroes, getHeroById } from '../hero';
-import { getHero, listHeroes, getHeroProfile } from '../../services/hahowHero';
-
-const getHeroProfileMock = getHeroProfile as jest.Mock;
-getHeroProfileMock.mockImplementation((heroId) => ({
-  str: parseInt(heroId),
-  int: parseInt(heroId),
-  agi: parseInt(heroId),
-  luk: parseInt(heroId),
-}));
+import { Hero } from '../../models/Hero';
 
 describe('controller/hero', () => {
   let res, req;
@@ -23,33 +15,35 @@ describe('controller/hero', () => {
   });
   describe('getHeroes', () => {
     test('should response heroes', async () => {
-      const listHeroesMock = listHeroes as jest.Mock;
-      listHeroesMock.mockImplementation(() => [
-        {
-          id: '1',
-          name: 'Daredevil',
-          image:
-            'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg',
-        },
-        {
-          id: '2',
-          name: 'Thor',
-          image:
-            'http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg',
-        },
-        {
-          id: '3',
-          name: 'Iron Man',
-          image:
-            'http://i.annihil.us/u/prod/marvel/i/mg/6/a0/55b6a25e654e6/standard_xlarge.jpg',
-        },
-        {
-          id: '4',
-          name: 'Hulk',
-          image:
-            'http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0/standard_xlarge.jpg',
-        },
-      ]);
+      const getHeroesMock = Hero.getHeroes as jest.Mock;
+      getHeroesMock.mockImplementationOnce(() =>
+        [
+          {
+            id: '1',
+            name: 'Daredevil',
+            image:
+              'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg',
+          },
+          {
+            id: '2',
+            name: 'Thor',
+            image:
+              'http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg',
+          },
+          {
+            id: '3',
+            name: 'Iron Man',
+            image:
+              'http://i.annihil.us/u/prod/marvel/i/mg/6/a0/55b6a25e654e6/standard_xlarge.jpg',
+          },
+          {
+            id: '4',
+            name: 'Hulk',
+            image:
+              'http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0/standard_xlarge.jpg',
+          },
+        ].map((hero) => new Hero(hero.id, hero.name, hero.image))
+      );
       await getHeroes(req, res, next);
       expect(res.json).toBeCalledWith({
         heroes: [
@@ -80,37 +74,39 @@ describe('controller/hero', () => {
         ],
       });
       expect(next).not.toBeCalled();
-      expect(listHeroesMock).toBeCalled();
+      expect(getHeroesMock).toBeCalled();
     });
     test('should response authenticated heroes', async () => {
-      const listHeroesMock = listHeroes as jest.Mock;
+      const getHeroesMock = Hero.getHeroes as jest.Mock;
       res.locals.authenticated = true;
-      listHeroesMock.mockImplementation(() => [
-        {
-          id: '1',
-          name: 'Daredevil',
-          image:
-            'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg',
-        },
-        {
-          id: '2',
-          name: 'Thor',
-          image:
-            'http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg',
-        },
-        {
-          id: '3',
-          name: 'Iron Man',
-          image:
-            'http://i.annihil.us/u/prod/marvel/i/mg/6/a0/55b6a25e654e6/standard_xlarge.jpg',
-        },
-        {
-          id: '4',
-          name: 'Hulk',
-          image:
-            'http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0/standard_xlarge.jpg',
-        },
-      ]);
+      getHeroesMock.mockImplementationOnce(() =>
+        [
+          {
+            id: '1',
+            name: 'Daredevil',
+            image:
+              'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg',
+          },
+          {
+            id: '2',
+            name: 'Thor',
+            image:
+              'http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg',
+          },
+          {
+            id: '3',
+            name: 'Iron Man',
+            image:
+              'http://i.annihil.us/u/prod/marvel/i/mg/6/a0/55b6a25e654e6/standard_xlarge.jpg',
+          },
+          {
+            id: '4',
+            name: 'Hulk',
+            image:
+              'http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0/standard_xlarge.jpg',
+          },
+        ].map((hero) => new Hero(hero.id, hero.name, hero.image))
+      );
 
       await getHeroes(req, res, next);
       expect(res.json).toBeCalledWith({
@@ -165,28 +161,30 @@ describe('controller/hero', () => {
           },
         ],
       });
-      expect(getHeroProfileMock).toBeCalledTimes(4);
     });
+
     test('should called next if error occur', async () => {
-      const listHeroesMock = listHeroes as jest.Mock;
-      listHeroesMock.mockImplementation(() => {
+      const getHeroesMock = Hero.getHeroes as jest.Mock;
+      getHeroesMock.mockImplementation(() => {
         throw new Error();
       });
       await getHeroes(req, res, next);
       expect(next).toBeCalledWith(new Error());
-      expect(listHeroesMock).toBeCalled();
+      expect(getHeroesMock).toBeCalled();
     });
   });
 
   describe('getHeroById', () => {
     test('should response hero', async () => {
-      const getHeroMock = getHero as jest.Mock;
-      getHeroMock.mockImplementation(() => ({
-        id: '1',
-        name: 'Daredevil',
-        image:
-          'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg',
-      }));
+      const getHeroMock = Hero.getHeroById as jest.Mock;
+      getHeroMock.mockImplementation(
+        () =>
+          new Hero(
+            '1',
+            'Daredevil',
+            'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg'
+          )
+      );
       req.params = { id: '1' };
       await getHeroById(req, res, next);
       expect(res.json).toBeCalledWith({
@@ -199,13 +197,15 @@ describe('controller/hero', () => {
       expect(getHeroMock).toBeCalledWith('1');
     });
     test('should response authenticated hero', async () => {
-      const getHeroMock = getHero as jest.Mock;
-      getHeroMock.mockImplementation(() => ({
-        id: '1',
-        name: 'Daredevil',
-        image:
-          'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg',
-      }));
+      const getHeroMock = Hero.getHeroById as jest.Mock;
+      getHeroMock.mockImplementation(
+        () =>
+          new Hero(
+            '1',
+            'Daredevil',
+            'http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg'
+          )
+      );
       req.params = { id: '1' };
       res.locals.authenticated = true;
       await getHeroById(req, res, next);
@@ -223,10 +223,9 @@ describe('controller/hero', () => {
       });
       expect(next).not.toBeCalled();
       expect(getHeroMock).toBeCalledWith('1');
-      expect(getHeroProfileMock).toBeCalledWith('1');
     });
     test('should called next if error occur', async () => {
-      const getHeroMock = getHero as jest.Mock;
+      const getHeroMock = Hero.getHeroById as jest.Mock;
       getHeroMock.mockImplementation(() => {
         throw new Error();
       });

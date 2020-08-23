@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getHero, listHeroes, getHeroProfile } from '../services/hahowHero';
+import { Hero } from '../models/Hero';
 
 export async function getHeroById(
   req: Request,
@@ -8,12 +8,12 @@ export async function getHeroById(
 ): Promise<Response | void> {
   try {
     const heroId = req.params.id;
-    const hero = await getHero(heroId);
+    const hero = await Hero.getHeroById(heroId);
     if (!res.locals.authenticated) {
       return res.json(hero);
     }
-    const profile = await getHeroProfile(hero.id);
-    return res.json({ ...hero, profile });
+    await hero.getProfile();
+    return res.json(hero);
   } catch (e) {
     return next(e);
   }
@@ -25,17 +25,14 @@ export async function getHeroes(
   next: NextFunction
 ): Promise<Response | void> {
   try {
-    const heroes = await listHeroes();
+    const heroes = await Hero.getHeroes();
+
     if (!res.locals.authenticated) {
       return res.json({ heroes });
     }
-    const herosWithProfile = await Promise.all(
-      heroes.map(async (hero) => ({
-        ...hero,
-        profile: await getHeroProfile(hero.id),
-      }))
-    );
-    return res.json({ heroes: herosWithProfile });
+
+    await Promise.all(heroes.map((hero) => hero.getProfile()));
+    return res.json({ heroes });
   } catch (e) {
     return next(e);
   }

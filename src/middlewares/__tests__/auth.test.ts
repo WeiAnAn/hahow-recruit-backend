@@ -50,7 +50,7 @@ describe('middlewares/auth', () => {
       (res as unknown) as Response,
       next
     );
-    expect(next).toBeCalledWith(new AuthValidationError());
+    expect(next).toBeCalledWith(new AuthValidationError('hahow'));
   });
 
   test('should call next with AuthenticationError when auth failed', async () => {
@@ -63,6 +63,6 @@ describe('middlewares/auth', () => {
       next
     );
     expect(mockAuth).toBeCalledWith('hahow', 'rock');
-    expect(next).toBeCalledWith(new AuthenticationError());
+    expect(next).toBeCalledWith(new AuthenticationError('hahow', 'rock'));
   });
 });
