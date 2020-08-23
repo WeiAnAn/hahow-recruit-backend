@@ -118,7 +118,7 @@ In `.env`
 CACHE_DRIVER=redis # Cache 機制, 預設使用 memory 可改指定 redis
 
 # 以下設定為使用 redis 作為 cache 的選項
-REDIS_HOST=redis
+REDIS_URL=redis
 REDIS_PORT=
 ```
 
