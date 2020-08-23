@@ -223,6 +223,19 @@ REDIS_PORT=
 
   還有 eslint 與 Jest 也沒辦法直接執行 TypeScript, eslint 參考了 [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint), Jest 則是在官網就有與 TypeScript 搭配的使用方法
 
+- Cache
+
+  Cache 的部分因為 Hahow 提供的 API 變動頻率不大, 所以可以先 cache 住, 降低反應速度, 也降低 Hahow server 的負荷
+
+  但是 Hahow 提供的資料可能是會變動的, 而且沒辦法知道甚麼時候會有變動
+
+  因此在 cache 的時候可能會因為 Hahow 資料的變動而造成使用者所拿到的資料是錯的，目前有想到幾個方法降低拿到錯誤資料的機會
+
+  - 降低 cache expire 時間
+  - 拿到 cache 後, 再去向 Hahow 取得資料, 然後更新 cache
+
+  還有可能會遇到一次有多個 request, 並且沒有 cache, 而同時向 Hahow server 發出請求, 造成 Hahow server 的負擔. 這個部分可以使用 lock, 讓同時只能有一個向 Hahow server 的 request.
+
 ## API
 
 ### List Heroes [GET] `/heroes`
