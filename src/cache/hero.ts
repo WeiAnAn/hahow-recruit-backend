@@ -1,5 +1,5 @@
 import cache from './drivers';
-import { Hero, HeroProfile } from '../models/Heroes';
+import { HeroData, HeroProfile } from '../models/Hero';
 
 const TWO_HOUR_SECOND = 2 * 60 * 60;
 
@@ -15,23 +15,23 @@ function getHeroProfileKey(heroId: string) {
   return `heroProfile:${heroId}`;
 }
 
-export function getHeroById(id: string): Promise<Hero | null> {
-  return cache.get(getHeroKey(id)) as Promise<Hero>;
+export function getHeroById(id: string): Promise<HeroData | null> {
+  return cache.get(getHeroKey(id)) as Promise<HeroData>;
 }
 
-export function listHeroes(): Promise<Hero[] | null> {
-  return cache.get(getHeroesKey()) as Promise<Hero[]>;
+export function listHeroes(): Promise<HeroData[] | null> {
+  return cache.get(getHeroesKey()) as Promise<HeroData[]>;
 }
 
 export function getHeroProfileById(id: string): Promise<HeroProfile | null> {
   return cache.get(getHeroProfileKey(id)) as Promise<HeroProfile>;
 }
 
-export function setHeroById(id: string, hero: Hero): Promise<void> {
+export function setHeroById(id: string, hero: HeroData): Promise<void> {
   return cache.set(getHeroKey(id), hero, TWO_HOUR_SECOND);
 }
 
-export function setHeroes(heroes: Hero[]): Promise<void> {
+export function setHeroes(heroes: HeroData[]): Promise<void> {
   return cache.set(getHeroesKey(), heroes, TWO_HOUR_SECOND);
 }
 
