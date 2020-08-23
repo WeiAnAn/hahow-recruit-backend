@@ -1,12 +1,12 @@
 import axios, { AxiosError } from 'axios';
-import { Hero, HeroProfile } from '../models/Heroes';
+import { HeroData, HeroProfile } from '../models/Hero';
 
 const HAHOW_HOST = 'https://hahow-recruit.herokuapp.com/';
 const request = axios.create({
   baseURL: HAHOW_HOST,
 });
 
-export async function listHeroes(): Promise<Hero[]> {
+export async function listHeroes(): Promise<HeroData[]> {
   const res = await request.get('/heroes');
   if (!res.data?.every?.(checkHeroData)) {
     throw new HahowHeroDataError(res.data);
@@ -14,7 +14,7 @@ export async function listHeroes(): Promise<Hero[]> {
   return res.data;
 }
 
-export async function getHero(heroId: string): Promise<Hero> {
+export async function getHero(heroId: string): Promise<HeroData> {
   try {
     const res = await request.get(`/heroes/${heroId}`);
     if (!checkHeroData(res.data)) {
@@ -63,7 +63,7 @@ function checkNotFound(e: AxiosError, heroId: string) {
   }
 }
 
-function checkHeroData(hero: Hero): boolean {
+function checkHeroData(hero: HeroData): boolean {
   return (
     hero &&
     hero.name !== undefined &&
