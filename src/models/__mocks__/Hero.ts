@@ -24,10 +24,6 @@ export class Hero {
     this.profile = profile;
   }
 
-  static getHeroes = jest.fn();
-
-  static getHeroById = jest.fn();
-
   async getProfile(): Promise<HeroProfile> {
     const profile = {
       str: parseInt(this.id),
@@ -39,3 +35,10 @@ export class Hero {
     return profile;
   }
 }
+
+//eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-expect-error
+Hero.getHeroes = jest.fn();
+//eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-expect-error
+Hero.getHeroById = jest.fn();
