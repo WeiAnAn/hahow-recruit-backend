@@ -26,6 +26,7 @@ https://hahow-recruit-backend.herokuapp.com/
   - [Dev dependencies](#devdependencies)
 - [註解原則](#註解原則)
 - [遇到的困難](#遇到的困難)
+- [其他特色](#其他特色)
 - [API](#API)
 
 ## Getting Started
@@ -235,6 +236,12 @@ REDIS_PORT=
   - 拿到 cache 後, 再去向 Hahow 取得資料, 然後更新 cache
 
   還有可能會遇到一次有多個 request, 並且沒有 cache, 而同時向 Hahow server 發出請求, 造成 Hahow server 的負擔. 這個部分可以使用 lock, 讓同時只能有一個向 Hahow server 的 request.
+
+## 其他特色
+
+- 使用 Github Actions 做 CI, pull request 時, 需要跑過 CI (install, lint, build, unit test, e2e test) 才能 merge
+- Merge 到 master 時, 自動 deploy 到 heroku
+- 利用 interface, 建立不同的 cache driver, 可以使用不同 cache 的服務, 如 memory, redis
 
 ## API
 
