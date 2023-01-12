@@ -1,6 +1,6 @@
 # Hahow Recruit Backend
 
-https://hahow-recruit-backend.herokuapp.com/
+~https://hahow-recruit-backend.herokuapp.com/~ (Heroku has removed the free plan, and it no longer works!)
 
 ## Table of Contents
 
